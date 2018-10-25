@@ -61,3 +61,7 @@ informatica_acessorios['percent_qty'] = informatica_acessorios.qty / informatica
 ax = sns.barplot(x="percent_qty", y="class", data=informatica_acessorios)
 ax.set_title('Informatica Acessorios Reviews Classes')
 plt.show()
+
+# get translations for category names
+translation = pd.read_csv('data/product_category_name_translation.csv')
+orders = df.merge(translation, on='product_category_name').drop('product_category_name', axis=1)
