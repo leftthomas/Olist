@@ -11,8 +11,6 @@ df.drop(['Unnamed: 0', 'id'], axis=1, inplace=True)
 df.drop(['review_comment_title'], axis=1, inplace=True)
 # drop the duplicate rows
 df.drop_duplicates(inplace=True)
-# drop the rows which cantains NaN value
-df.dropna(inplace=True)
 
 # convert datetime features to the correct format
 df.order_purchase_timestamp = pd.to_datetime(df.order_purchase_timestamp)
@@ -24,7 +22,7 @@ df.review_answer_timestamp = pd.to_datetime(df.review_answer_timestamp)
 # print the info of this dataset
 # print(df.info())
 # save this file
-df.to_csv('data/classified_orders.csv', index_label='id')
+df.to_csv('data/classified_orders.csv', index=False)
 
 df = pd.read_csv('data/olist_public_dataset_v2.csv')
 # drop the duplicate rows
