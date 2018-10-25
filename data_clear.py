@@ -25,3 +25,19 @@ df.review_answer_timestamp = pd.to_datetime(df.review_answer_timestamp)
 # print(df.info())
 # save this file
 df.to_csv('data/classified_orders.csv', index_label='id')
+
+df = pd.read_csv('data/olist_public_dataset_v2.csv')
+# drop the duplicate rows
+df.drop_duplicates(inplace=True)
+
+# convert datetime features to the correct format
+df.order_purchase_timestamp = pd.to_datetime(df.order_purchase_timestamp)
+df.order_aproved_at = pd.to_datetime(df.order_aproved_at)
+df.order_estimated_delivery_date = pd.to_datetime(df.order_estimated_delivery_date)
+df.order_delivered_customer_date = pd.to_datetime(df.order_delivered_customer_date)
+df.review_creation_date = pd.to_datetime(df.review_creation_date)
+df.review_answer_timestamp = pd.to_datetime(df.review_answer_timestamp)
+# print the info of this dataset
+# print(df.info())
+# save this file
+df.to_csv('data/unclassified_orders.csv', index=False)
