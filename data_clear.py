@@ -1,41 +1,34 @@
 import pandas as pd
 
-df = pd.read_csv('data/olist_classified_public_dataset.csv')
-# select all votes columns and  drop them
-votes_columns = [s for s in df.columns if "votes_" in s]
-df.drop(votes_columns, axis=1, inplace=True)
+product_names_table = pd.read_csv('data/product_category_name_translation.csv')
+customers_table = pd.read_csv('data/olist_public_dataset_v2_customers.csv')
+payment_table = pd.read_csv('data/olist_public_dataset_v2_payments.csv')
+geolocation_table = pd.read_csv('data/geolocation_olist_public_dataset.csv')
+unclassified_orders = pd.read_csv('data/olist_public_dataset_v2.csv')
+classified_orders = pd.read_csv('data/olist_classified_public_dataset.csv')
+
+# merge translations for category names
+unclassified_orders = unclassified_orders.merge(product_names_table, on='product_category_name').drop(
+    'product_category_name', axis=1)
+unclassified_orders.rename(columns={'product_category_name_english': 'product_category_name'}, inplace=True)
+classified_orders = classified_orders.merge(product_names_table, on='product_category_name').drop(
+    'product_category_name', axis=1)
+classified_orders.rename(columns={'product_category_name_english': 'product_category_name'}, inplace=True)
+
+# merge customer ids
+unclassified_orders = unclassified_orders.merge(customers_table, on='customer_id').drop('customer_id', axis=1)
+unclassified_orders.rename(columns={'customer_unique_id': 'customer_id'}, inplace=True)
 
 # drop the first two columns
-df.drop(['Unnamed: 0', 'id'], axis=1, inplace=True)
+classified_orders.drop(['Unnamed: 0', 'id'], axis=1, inplace=True)
 # drop the review_comment_title column, because all values are null
-df.drop(['review_comment_title'], axis=1, inplace=True)
+classified_orders.drop(['review_comment_title'], axis=1, inplace=True)
+# drop the review_id column, because this value is same as order_id
+unclassified_orders.drop(['review_id'], axis=1, inplace=True)
 # drop the duplicate rows
-df.drop_duplicates(inplace=True)
+print(payment_table.info())
+payment_table.drop_duplicates(inplace=True)
+print(payment_table.info())
 
-# convert datetime features to the correct format
-df.order_purchase_timestamp = pd.to_datetime(df.order_purchase_timestamp)
-df.order_aproved_at = pd.to_datetime(df.order_aproved_at)
-df.order_estimated_delivery_date = pd.to_datetime(df.order_estimated_delivery_date)
-df.order_delivered_customer_date = pd.to_datetime(df.order_delivered_customer_date)
-df.review_creation_date = pd.to_datetime(df.review_creation_date)
-df.review_answer_timestamp = pd.to_datetime(df.review_answer_timestamp)
-# print the info of this dataset
-# print(df.info())
-# save this file
-df.to_csv('data/classified_orders.csv', index=False)
-
-df = pd.read_csv('data/olist_public_dataset_v2.csv')
-# drop the duplicate rows
-df.drop_duplicates(inplace=True)
-
-# convert datetime features to the correct format
-df.order_purchase_timestamp = pd.to_datetime(df.order_purchase_timestamp)
-df.order_aproved_at = pd.to_datetime(df.order_aproved_at)
-df.order_estimated_delivery_date = pd.to_datetime(df.order_estimated_delivery_date)
-df.order_delivered_customer_date = pd.to_datetime(df.order_delivered_customer_date)
-df.review_creation_date = pd.to_datetime(df.review_creation_date)
-df.review_answer_timestamp = pd.to_datetime(df.review_answer_timestamp)
-# print the info of this dataset
-# print(df.info())
-# save this file
-df.to_csv('data/unclassified_orders.csv', index=False)
+# payment_table.dropna(inplace=True)
+# df.to_csv('data/classified_orders.csv', index=False)
