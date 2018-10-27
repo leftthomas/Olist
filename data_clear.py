@@ -26,9 +26,8 @@ classified_orders.drop(['review_comment_title'], axis=1, inplace=True)
 # drop the review_id column, because this value is same as order_id
 unclassified_orders.drop(['review_id'], axis=1, inplace=True)
 # drop the duplicate rows
-print(payment_table.info())
 payment_table.drop_duplicates(inplace=True)
-print(payment_table.info())
+classified_orders.drop_duplicates(inplace=True)
 
 # payment_table.dropna(inplace=True)
 # df.to_csv('data/classified_orders.csv', index=False)
