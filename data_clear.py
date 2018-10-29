@@ -2,10 +2,13 @@ import pandas as pd
 
 product_names_table = pd.read_csv('data/product_category_name_translation.csv')
 customers_table = pd.read_csv('data/olist_public_dataset_v2_customers.csv')
-payment_table = pd.read_csv('data/olist_public_dataset_v2_payments.csv')
+products_table = pd.read_csv('data/product_measures_olist_public_dataset_.csv')
+sellers_table = pd.read_csv('data/sellers_olist_public_dataset_.csv')
+payment_table = pd.read_csv('data/payments_olist_public_dataset.csv')
 geolocation_table = pd.read_csv('data/geolocation_olist_public_dataset.csv')
 unclassified_orders = pd.read_csv('data/olist_public_dataset_v2.csv')
 classified_orders = pd.read_csv('data/olist_classified_public_dataset.csv')
+
 
 # merge translations for category names
 unclassified_orders = unclassified_orders.merge(product_names_table, on='product_category_name').drop(
@@ -26,8 +29,8 @@ classified_orders.drop(['review_comment_title'], axis=1, inplace=True)
 # drop the review_id column, because this value is same as order_id
 unclassified_orders.drop(['review_id'], axis=1, inplace=True)
 # drop the duplicate rows
-payment_table.drop_duplicates(inplace=True)
 classified_orders.drop_duplicates(inplace=True)
 
 # payment_table.dropna(inplace=True)
+# payment_table.drop_duplicates(inplace=True)
 # df.to_csv('data/classified_orders.csv', index=False)
