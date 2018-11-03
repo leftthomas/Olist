@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 customers = pd.read_csv('data/olist_customers_dataset.csv')
@@ -9,6 +10,15 @@ orders = pd.read_csv('data/olist_orders_dataset.csv')
 products = pd.read_csv('data/olist_products_dataset.csv')
 sellers = pd.read_csv('data/olist_sellers_dataset.csv')
 product_names_translations = pd.read_csv('data/product_category_name_translation.csv')
+
+# fill the three unfilled translations
+product_names_translations = product_names_translations.append(
+    {'product_category_name': 'portateis_cozinha_e_preparadores_de_alimentos',
+     'product_category_name_english': 'portable_kitchen_and_food_preparators'}, ignore_index=True)
+product_names_translations = product_names_translations.append(
+    {'product_category_name': 'pc_gamer', 'product_category_name_english': 'pc_gamer'}, ignore_index=True)
+product_names_translations = product_names_translations.append(
+    {'product_category_name': np.nan, 'product_category_name_english': np.nan}, ignore_index=True)
 
 customers.to_csv('data/customers.csv', index=False)
 geolocations.to_csv('data/geolocations.csv', index=False)
