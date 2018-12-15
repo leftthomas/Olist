@@ -13,11 +13,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/products')
-def products():
-    return render_template('products.html')
-
-
 @app.route('/orders')
 def orders():
     return render_template('orders.html')
