@@ -1,5 +1,7 @@
 from flask import Flask, render_template, redirect
 
+from utils import load_data
+
 app = Flask(__name__)
 
 
@@ -34,4 +36,5 @@ def maps():
 
 
 if __name__ == '__main__':
+    customers, sellers, products, orders, items, payments, reviews, geolocations = load_data()
     app.run()
