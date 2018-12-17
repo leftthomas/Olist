@@ -12,7 +12,7 @@ def index():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', customer=customers.iloc[0])
 
 
 @app.route('/orders')
@@ -28,11 +28,6 @@ def reviews():
 @app.route('/maps')
 def maps():
     return render_template('maps.html')
-
-
-# @app.route('/hello/<name>')
-# def show_user_profile(name):
-#     return render_template('dashboard.html', name=name)
 
 
 if __name__ == '__main__':
