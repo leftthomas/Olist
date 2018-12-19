@@ -80,12 +80,11 @@
 
             <!--Grid column-->
             <div class="col-md-8 mb-4">
-
                 <!--Card-->
                 <div class="card">
 
                     <!-- Card header -->
-                    <div class="card-header">Sales Per Day</div>
+                    <div class="card-header">Sales Per Week</div>
 
                     <!--Card content-->
                     <div class="card-body">
@@ -101,8 +100,9 @@
                             </div>
                         </div>
 
-                        <canvas id="sales_dayChart" style="display: block" width="774" height="420"
+                        <canvas id="sales_weekChart" style="display: block" width="774" height="420"
                                 class="chartjs-render-monitor"></canvas>
+
                     </div>
 
                 </div>
@@ -204,12 +204,11 @@
 
             <!--Grid column-->
             <div class="col-md-9 mb-4">
-
                 <!--Card-->
                 <div class="card">
 
                     <!-- Card header -->
-                    <div class="card-header">Sales Per Week</div>
+                    <div class="card-header">Sales Per Day</div>
 
                     <!--Card content-->
                     <div class="card-body">
@@ -225,9 +224,8 @@
                             </div>
                         </div>
 
-                        <canvas id="sales_weekChart" style="display: block" width="774" height="420"
+                        <canvas id="sales_dayChart" style="display: block" width="774" height="420"
                                 class="chartjs-render-monitor"></canvas>
-
                     </div>
 
                 </div>
@@ -317,12 +315,12 @@
                 {
                     label: "Price",
                     backgroundColor: [
-                        'rgba(105, 0, 132, .2)',
+                        'rgba(105, 0, 132, 0.2)',
                     ],
                     borderColor: [
-                        'rgba(200, 99, 132, .7)',
+                        'rgba(200, 99, 132, 0.7)',
                     ],
-                    borderWidth: 2,
+                    borderWidth: 1,
                     data: [{% for price in sales_per_purchase_date.price.values %} {{price}}, {% endfor %}],
                 }]
         },
@@ -347,7 +345,59 @@
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(169,169,169, 0.2)',
+                    'rgba(30, 198, 87, 0.2)',
+                    'rgba(252, 56, 76, 0.2)',
+                    'rgba(38, 38, 38, 0.2)',
+                    'rgba(86, 87, 86, 0.2)',
+                    'rgba(153, 22, 255, 0.2)',
+                    'rgba(255, 18, 64, 0.2)',
+                    'rgba(169,0,169, 0.2)',
+                    'rgba(197,31,132, 0.2)',
+                    'rgba(66,178,115, 0.2)',
+                    'rgba(0,255,255, 0.2)',
+                    'rgba(127,255,212, 0.2)',
+                    'rgba(252,71,30, 0.2)',
+                    'rgba(138,69,27, 0.2)',
+                    'rgba(248,129,117, 0.2)',
+                    'rgba(0,0,0, 0.2)',
+                    'rgba(252,100,77, 0.2)',
+                    'rgba(0,0,255, 0.2)',
+                    'rgba(138,43,226, 0.2)',
+                    'rgba(165,42,42, 0.2)',
+                    'rgba(222,184,135, 0.2)',
+                    'rgba(95,158,160, 0.2)',
+                    'rgba(127,255,0, 0.2)',
+                    'rgba(210,105,30, 0.2)',
+                    'rgba(255,127,80, 0.2)',
+                    'rgba(100,149,237, 0.2)',
+                    'rgba(155,203,64, 0.2)',
+                    'rgba(220,20,60, 0.2)',
+                    'rgba(0,255,255, 0.2)',
+                    'rgba(0,0,139, 0.2)',
+                    'rgba(0,139,139, 0.2)',
+                    'rgba(184,134,11, 0.2)',
+                    'rgba(169,169,169, 0.2)',
+                    'rgba(0,100,0, 0.2)',
+                    'rgba(189,183,107, 0.2)',
+                    'rgba(139,0,139, 0.2)',
+                    'rgba(85,107,47, 0.2)',
+                    'rgba(255,140,0, 0.2)',
+                    'rgba(153,50,204, 0.2)',
+                    'rgba(139,0,0, 0.2)',
+                    'rgba(231,150,125, 0.2)',
+                    'rgba(144,187,145, 0.2)',
+                    'rgba(72,63,137, 0.2)',
+                    'rgba(48,79,79, 0.2)',
+                    'rgba(147,29,208, 0.2)',
+                    'rgba(254,213,48, 0.2)',
+                    'rgba(252,40,252, 0.2)',
+                    'rgba(203,93,94, 0.2)',
+                    'rgba(74,13,128, 0.2)',
+                    'rgba(238,129,130, 0.2)',
+                    'rgba(44,178,169, 0.2)',
+                    'rgba(126,3,8, 0.2)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
@@ -355,7 +405,59 @@
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(169,169,169, 1)',
+                    'rgba(30, 198, 87,1)',
+                    'rgba(252, 56, 76, 1)',
+                    'rgba(38, 38, 38, 1)',
+                    'rgba(86, 87, 86, 1)',
+                    'rgba(153, 22, 255, 1)',
+                    'rgba(255, 18, 64, 1)',
+                    'rgba(169,0,169, 1)',
+                    'rgba(197,31,132, 1)',
+                    'rgba(66,178,115, 1)',
+                    'rgba(0,255,255, 1)',
+                    'rgba(127,255,212, 1)',
+                    'rgba(252,71,30, 1)',
+                    'rgba(138,69,27, 1)',
+                    'rgba(248,129,117, 1)',
+                    'rgba(0,0,0, 1)',
+                    'rgba(252,100,77, 1)',
+                    'rgba(0,0,255, 1)',
+                    'rgba(138,43,226, 1)',
+                    'rgba(165,42,42, 1)',
+                    'rgba(222,184,135, 1)',
+                    'rgba(95,158,160, 1)',
+                    'rgba(127,255,0, 1)',
+                    'rgba(210,105,30, 1)',
+                    'rgba(255,127,80, 1)',
+                    'rgba(100,149,237, 1)',
+                    'rgba(155,203,64, 1)',
+                    'rgba(220,20,60, 1)',
+                    'rgba(0,255,255, 1)',
+                    'rgba(0,0,139, 1)',
+                    'rgba(0,139,139, 1)',
+                    'rgba(184,134,11, 1)',
+                    'rgba(169,169,169, 1)',
+                    'rgba(0,100,0, 1)',
+                    'rgba(189,183,107, 1)',
+                    'rgba(139,0,139, 1)',
+                    'rgba(85,107,47, 1)',
+                    'rgba(255,140,0, 1)',
+                    'rgba(153,50,204, 1)',
+                    'rgba(139,0,0, 1)',
+                    'rgba(231,150,125, 1)',
+                    'rgba(144,187,145, 1)',
+                    'rgba(72,63,137, 1)',
+                    'rgba(48,79,79, 1)',
+                    'rgba(147,29,208, 1)',
+                    'rgba(254,213,48, 1)',
+                    'rgba(252,40,252, 1)',
+                    'rgba(203,93,94, 1)',
+                    'rgba(74,13,128, 1)',
+                    'rgba(238,129,130, 1)',
+                    'rgba(44,178,169, 1)',
+                    'rgba(126,3,8, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -377,7 +479,8 @@
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(169,169,169, 0.2)',
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
@@ -385,7 +488,8 @@
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(169,169,169, 1)'
                 ],
                 borderWidth: 1
             }]

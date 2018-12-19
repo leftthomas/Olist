@@ -48,6 +48,7 @@ def dashboard():
     payments_values = payments[['order_id', 'payment_type']].drop_duplicates()
     payments_values = payments_values.groupby('payment_type', as_index=False).agg({'order_id': ['count']})
     payments_values.columns = ['payment_type', 'payment_type_count']
+    payments_values['payment_type'] = payments_values['payment_type'].apply(lambda x: x.replace('_', ' '))
     return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date,
                            sales_per_purchase_week=sales_per_purchase_week,
                            avg_score_per_category=avg_score_per_category, payments_values=payments_values)
