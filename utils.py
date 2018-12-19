@@ -22,9 +22,6 @@ def load_data():
     products = pd.read_csv('data/products.csv')
     sellers = pd.read_csv('data/sellers.csv')
     product_names_translations = pd.read_csv('data/translations.csv')
-
-    # add total_value feature
-    items['total_value'] = items['price'].add(items['freight_value'])
     # merge product_names_translations to products and replace it
     products = pd.merge(products, product_names_translations, on='product_category_name')
     products.drop(['product_category_name'], axis=1, inplace=True)

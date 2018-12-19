@@ -84,6 +84,9 @@
                 <!--Card-->
                 <div class="card">
 
+                    <!-- Card header -->
+                    <div class="card-header">Sales per day</div>
+
                     <!--Card content-->
                     <div class="card-body">
                         <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
@@ -98,8 +101,8 @@
                             </div>
                         </div>
 
-                        <canvas id="sales_chart" style="display: block; height: 308px; width: 616px;" width="1232"
-                                height="616" class="chartjs-render-monitor"></canvas>
+                        <canvas id="salesChart" style="display: block; height: 193px; width: 387px;" width="774"
+                                height="386" class="chartjs-render-monitor"></canvas>
                     </div>
 
                 </div>
@@ -188,42 +191,27 @@
 
 <!-- Charts -->
 <script>
-    // Line
-    var ctx = document.getElementById("sales_chart").getContext('2d');
-    var sales_chart = new Chart(ctx, {
-        type: 'bar',
+    //line
+    var salesChart_id = document.getElementById("salesChart").getContext('2d');
+    var salesChart = new Chart(salesChart_id, {
+        type: 'line',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September"],
+            datasets: [
+                {
+                    label: "Price(k)",
+                    backgroundColor: [
+                        'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2,
+                    data: [{% for price in sales_per_purchase_month.price.values %} {{price}}, {% endfor %}],
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            responsive: true
         }
     });
 </script>
