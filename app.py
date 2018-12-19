@@ -13,33 +13,44 @@ def index():
 
 @app.route('/dashboard')
 def dashboard():
-    order_values = items.drop(['order_item_id', 'product_id', 'seller_id', 'shipping_limit_date'], axis=1)
-    order_values = order_values.groupby('order_id').sum()
-    summed_orders = pd.merge(orders, order_values, on='order_id')
+    order_values = items[['order_id', 'price']].groupby('order_id').sum()
+    summed_orders = pd.merge(orders[['order_id', 'order_purchase_timestamp']], order_values, on='order_id')
     # creating purchase feature
-    summed_orders['order_purchase_date'] = summed_orders['order_purchase_timestamp'].dt.date
-    # creating an aggregation
-    sales_per_purchase_date = summed_orders.groupby('order_purchase_date', as_index=False).sum()
-    sales_per_purchase_date['order_purchase_date'] = sales_per_purchase_date['order_purchase_date'].apply(
+    summed_orders['order_purchase_date'] = summed_orders['order_purchase_timestamp'].dt.date.apply(
         lambda x: x.strftime('%Y-%m-%d'))
+    summed_orders['order_purchase_week'] = summed_orders['order_purchase_timestamp'].dt.date.apply(
+        lambda x: x.strftime('%A'))
+    # creating aggregations
+    sales_per_purchase_date = summed_orders.groupby('order_purchase_date', as_index=False).sum()
     sales_per_purchase_date['price'] = sales_per_purchase_date['price'].apply(lambda x: float('%.2f' % x))
+    sales_per_purchase_week = summed_orders.groupby('order_purchase_week', as_index=False).sum()
+    sales_per_purchase_week['price'] = sales_per_purchase_week['price'].apply(lambda x: float('%.2f' % (x / 1000)))
+    list_sorted = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    sales_per_purchase_week['order_purchase_week'] = sales_per_purchase_week['order_purchase_week'].astype(
+        'category').cat.set_categories(list_sorted)
+    sales_per_purchase_week = sales_per_purchase_week.sort_values(by=['order_purchase_week'], ascending=True)
 
-    # # creating an aggregation
-    # avg_score_per_category = df.groupby('product_category_name', as_index=False).agg(
-    #     {'review_score': ['count', 'mean']})
-    # avg_score_per_category.columns = ['product_category_name', 'count', 'mean']
-    # # filtering to show only categories with more than 50 reviews
-    # avg_score_per_category = avg_score_per_category[avg_score_per_category['count'] > 50]
-    # avg_score_per_category = avg_score_per_category.sort_values(by='mean', ascending=False)
-    # ax = sns.barplot(x="mean", y="product_category_name", data=avg_score_per_category)
-    # ax.set_title('Categories Review Score')
-    # plt.show()
-    #
-    # sns.distplot(df['total_value'], bins=800, kde=False, color='b')
-    # plt.xlim([0, 600])
-    # plt.show()
+    merged_reviews = pd.merge(reviews[['order_id', 'review_score']], items[['order_id', 'product_id']], how='left',
+                              on='order_id')
+    merged_reviews = pd.merge(merged_reviews, products[['product_id', 'product_category_name']], how='left',
+                              on='product_id')
+    # creating an aggregation
+    avg_score_per_category = merged_reviews.groupby('product_category_name', as_index=False).agg(
+        {'review_score': ['count', 'mean']})
+    avg_score_per_category.columns = ['product_category_name', 'review_score_count', 'review_score_mean']
+    # filtering to show only categories with more than 50 reviews
+    avg_score_per_category = avg_score_per_category[avg_score_per_category['review_score_count'] > 50]
+    avg_score_per_category['product_category_name'] = avg_score_per_category['product_category_name'].apply(
+        lambda x: x.replace('_', ' '))
+    avg_score_per_category['review_score_mean'] = avg_score_per_category['review_score_mean'].apply(
+        lambda x: float('%.2f' % x))
 
-    return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date)
+    payments_values = payments[['order_id', 'payment_type']].drop_duplicates()
+    payments_values = payments_values.groupby('payment_type', as_index=False).agg({'order_id': ['count']})
+    payments_values.columns = ['payment_type', 'payment_type_count']
+    return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date,
+                           sales_per_purchase_week=sales_per_purchase_week,
+                           avg_score_per_category=avg_score_per_category, payments_values=payments_values)
 
 
 @app.route('/orders')

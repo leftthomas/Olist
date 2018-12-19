@@ -85,7 +85,7 @@
                 <div class="card">
 
                     <!-- Card header -->
-                    <div class="card-header">Sales per day</div>
+                    <div class="card-header">Sales Per Day</div>
 
                     <!--Card content-->
                     <div class="card-body">
@@ -101,8 +101,8 @@
                             </div>
                         </div>
 
-                        <canvas id="salesChart" style="display: block; height: 193px; width: 387px;" width="774"
-                                height="386" class="chartjs-render-monitor"></canvas>
+                        <canvas id="sales_dayChart" style="display: block" width="774" height="420"
+                                class="chartjs-render-monitor"></canvas>
                     </div>
 
                 </div>
@@ -132,6 +132,9 @@
                                         <i class="fa fa-arrow-circle-up ml-1"></i>
                                     </span>
                             </a>
+                            <a class="list-group-item list-group-item-action waves-effect">Best Sell
+                                <span class="badge badge-secondary badge-pill pull-right">bed bath table</span>
+                            </a>
                             <a class="list-group-item list-group-item-action waves-effect">Customers
                                 <span class="badge badge-primary badge-pill pull-right">96.1k</span>
                             </a>
@@ -147,6 +150,119 @@
                         </div>
                         <!-- List group links -->
 
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+        <!--Grid row-->
+        <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">
+
+                <!--Card-->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header">Categories Review Score</div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="scoreChart" style="display: block" width="774" height="720"
+                                class="chartjs-render-monitor"></canvas>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+        <!--Grid row-->
+        <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+            <!--Grid column-->
+            <div class="col-md-9 mb-4">
+
+                <!--Card-->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header">Sales Per Week</div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="sales_weekChart" style="display: block" width="774" height="420"
+                                class="chartjs-render-monitor"></canvas>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-3 mb-4">
+
+                <!--Card-->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header text-center">
+                        Payment Type
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="paymentChart" style="display: block" width="318"
+                                height="158" class="chartjs-render-monitor"></canvas>
                     </div>
 
                 </div>
@@ -192,8 +308,8 @@
 <!-- Charts -->
 <script>
     //line
-    var salesChart_id = document.getElementById("salesChart").getContext('2d');
-    var salesChart = new Chart(salesChart_id, {
+    var sales_dayChart_id = document.getElementById("sales_dayChart").getContext('2d');
+    var sales_dayChart = new Chart(sales_dayChart_id, {
         type: 'line',
         data: {
             labels: [{% for date in sales_per_purchase_date.order_purchase_date.values %} '{{date}}', {% endfor %}],
@@ -208,10 +324,99 @@
                     ],
                     borderWidth: 2,
                     data: [{% for price in sales_per_purchase_date.price.values %} {{price}}, {% endfor %}],
-            }]
+                }]
         },
         options: {
             responsive: true
+        }
+    });
+
+    //bar
+    var scoreChart_id = document.getElementById("scoreChart").getContext('2d');
+    var scoreChart = new Chart(scoreChart_id, {
+        type: 'horizontalBar',
+        data: {
+            labels: [
+                {% for product_category_name in avg_score_per_category.product_category_name.values %} '{{product_category_name}}', {% endfor %}],
+            datasets: [{
+                label: '# of Scores',
+                data: [{% for score in avg_score_per_category.review_score_mean.values %} {{score}}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+
+    //bar
+    var sales_weekChart_id = document.getElementById("sales_weekChart").getContext('2d');
+    var sales_weekChart = new Chart(sales_weekChart_id, {
+        type: 'bar',
+        data: {
+            labels: [{% for week in sales_per_purchase_week.order_purchase_week.values %} '{{week}}', {% endfor %}],
+            datasets: [{
+                label: '# of Prices (k)',
+                data: [{% for price in sales_per_purchase_week.price.values %} {{price}}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    //pie
+    var paymentChart_id = document.getElementById("paymentChart").getContext('2d');
+    var paymentChart = new Chart(paymentChart_id, {
+        type: 'pie',
+        data: {
+            labels: [{% for payment_type in payments_values.payment_type.values %} '{{payment_type}}', {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for payment_type_count in payments_values.payment_type_count.values %} {{payment_type_count}}, {% endfor %}],
+                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: false
         }
     });
 </script>
