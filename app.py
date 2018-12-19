@@ -13,13 +13,13 @@ def index():
 
 @app.route('/dashboard')
 def dashboard():
-    # creating a purchase day feature
+    # creating purchase feature
     orders['order_purchase_date'] = orders['order_purchase_timestamp'].dt.date
     order_values = items.drop(['order_item_id', 'product_id', 'seller_id', 'shipping_limit_date'], axis=1)
     order_values = order_values.groupby('order_id').sum()
-    sumed_orders = pd.merge(orders, order_values, on='order_id')
+    summed_orders = pd.merge(orders, order_values, on='order_id')
     # creating an aggregation
-    sales_per_purchase_date = sumed_orders.groupby('order_purchase_date', as_index=False).total_value.sum()
+    sales_per_purchase_date = summed_orders.groupby('order_purchase_date', as_index=False).total_value.sum()
     # ax = sns.lineplot(x="order_purchase_date", y="order_products_value", data=sales_per_purchase_date)
     # ax.set_title('Sales per day')
 
