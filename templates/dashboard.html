@@ -98,7 +98,7 @@
                             </div>
                         </div>
 
-                        <canvas id="myChart" style="display: block; height: 308px; width: 616px;" width="1232"
+                        <canvas id="sales_chart" style="display: block; height: 308px; width: 616px;" width="1232"
                                 height="616" class="chartjs-render-monitor"></canvas>
                     </div>
 
@@ -189,8 +189,8 @@
 <!-- Charts -->
 <script>
     // Line
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
+    var ctx = document.getElementById("sales_chart").getContext('2d');
+    var sales_chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],

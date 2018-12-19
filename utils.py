@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
 
 
 def load_data():
@@ -34,35 +32,3 @@ def load_data():
 
     return customers, sellers, products, orders, items, payments, reviews, geolocations
 
-
-def other():
-    sns.set(rc={'figure.figsize': (16, 9)})
-
-    df = pd.read_csv('data/classified_orders.csv')
-
-    # creating a purchase day feature
-    df['order_purchase_date'] = df.order_purchase_timestamp.dt.date
-
-    # creating an aggregation
-    sales_per_purchase_date = df.groupby('order_purchase_date', as_index=False).order_products_value.sum()
-    ax = sns.lineplot(x="order_purchase_date", y="order_products_value", data=sales_per_purchase_date)
-    ax.set_title('Sales per day')
-    plt.show()
-
-    # creating an aggregation
-    avg_score_per_category = df.groupby('product_category_name', as_index=False).agg(
-        {'review_score': ['count', 'mean']})
-    avg_score_per_category.columns = ['product_category_name', 'count', 'mean']
-    # filtering to show only categories with more than 50 reviews
-    avg_score_per_category = avg_score_per_category[avg_score_per_category['count'] > 50]
-    avg_score_per_category = avg_score_per_category.sort_values(by='mean', ascending=False)
-    ax = sns.barplot(x="mean", y="product_category_name", data=avg_score_per_category)
-    ax.set_title('Categories Review Score')
-    plt.show()
-
-    #
-    sns.set_style("whitegrid")
-    plt.figure(figsize=(12, 6))
-    sns.distplot(df['total_value'], bins=800, kde=False, color='b')
-    plt.xlim([0, 600])
-    plt.show()
