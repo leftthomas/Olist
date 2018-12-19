@@ -17,11 +17,12 @@ def dashboard():
     order_values = order_values.groupby('order_id').sum()
     summed_orders = pd.merge(orders, order_values, on='order_id')
     # creating purchase feature
-    summed_orders = summed_orders[summed_orders['order_purchase_timestamp'] >= pd.datetime(2018, 1, 1)]
-    summed_orders['order_purchase_month'] = summed_orders['order_purchase_timestamp'].dt.month
+    summed_orders['order_purchase_date'] = summed_orders['order_purchase_timestamp'].dt.date
     # creating an aggregation
-    sales_per_purchase_month = summed_orders.groupby('order_purchase_month', as_index=False).sum()
-    sales_per_purchase_month["price"] = sales_per_purchase_month["price"] / 1000
+    sales_per_purchase_date = summed_orders.groupby('order_purchase_date', as_index=False).sum()
+    sales_per_purchase_date['order_purchase_date'] = sales_per_purchase_date['order_purchase_date'].apply(
+        lambda x: x.strftime('%Y-%m-%d'))
+    sales_per_purchase_date['price'] = sales_per_purchase_date['price'].apply(lambda x: float('%.2f' % x))
 
     # # creating an aggregation
     # avg_score_per_category = df.groupby('product_category_name', as_index=False).agg(
@@ -38,7 +39,7 @@ def dashboard():
     # plt.xlim([0, 600])
     # plt.show()
 
-    return render_template('dashboard.html', sales_per_purchase_month=sales_per_purchase_month)
+    return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date)
 
 
 @app.route('/orders')

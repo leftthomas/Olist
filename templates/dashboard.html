@@ -196,10 +196,10 @@
     var salesChart = new Chart(salesChart_id, {
         type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September"],
+            labels: [{% for date in sales_per_purchase_date.order_purchase_date.values %} '{{date}}', {% endfor %}],
             datasets: [
                 {
-                    label: "Price(k)",
+                    label: "Price",
                     backgroundColor: [
                         'rgba(105, 0, 132, .2)',
                     ],
@@ -207,7 +207,7 @@
                         'rgba(200, 99, 132, .7)',
                     ],
                     borderWidth: 2,
-                    data: [{% for price in sales_per_purchase_month.price.values %} {{price}}, {% endfor %}],
+                    data: [{% for price in sales_per_purchase_date.price.values %} {{price}}, {% endfor %}],
             }]
         },
         options: {
