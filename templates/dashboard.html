@@ -224,7 +224,7 @@
                             </div>
                         </div>
 
-                        <canvas id="sales_dayChart" style="display: block" width="774" height="420"
+                        <canvas id="sales_dayChart" style="display: block" width="774" height="400"
                                 class="chartjs-render-monitor"></canvas>
                     </div>
 
@@ -238,11 +238,11 @@
             <div class="col-md-3 mb-4">
 
                 <!--Card-->
-                <div class="card">
+                <div class="card mb-4">
 
                     <!-- Card header -->
                     <div class="card-header text-center">
-                        Payment Type
+                        Payment Type of Value
                     </div>
 
                     <!--Card content-->
@@ -259,7 +259,36 @@
                             </div>
                         </div>
 
-                        <canvas id="paymentChart" style="display: block" width="318"
+                        <canvas id="payment_valueChart" style="display: block" width="318"
+                                height="158" class="chartjs-render-monitor"></canvas>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+                <!--Card-->
+                <div class="card mb-4">
+
+                    <!-- Card header -->
+                    <div class="card-header text-center">
+                        Payment Type of Number
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="payment_numberChart" style="display: block" width="318"
                                 height="158" class="chartjs-render-monitor"></canvas>
                     </div>
 
@@ -305,6 +334,7 @@
 
 <!-- Charts -->
 <script>
+
     //line
     var sales_dayChart_id = document.getElementById("sales_dayChart").getContext('2d');
     var sales_dayChart = new Chart(sales_dayChart_id, {
@@ -506,14 +536,33 @@
     });
 
     //pie
-    var paymentChart_id = document.getElementById("paymentChart").getContext('2d');
-    var paymentChart = new Chart(paymentChart_id, {
+    var payment_valueChart_id = document.getElementById("payment_valueChart").getContext('2d');
+    var payment_valueChart = new Chart(payment_valueChart_id, {
         type: 'pie',
         data: {
             labels: [{% for payment_type in payments_values.payment_type.values %} '{{payment_type}}', {% endfor %}],
             datasets: [{
                 data: [
-                    {% for payment_type_count in payments_values.payment_type_count.values %} {{payment_type_count}}, {% endfor %}],
+                    {% for payment_value in payments_values.payment_value.values %} {{payment_value}}, {% endfor %}],
+                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: false
+        }
+    });
+
+    //pie
+    var payment_numberChart_id = document.getElementById("payment_numberChart").getContext('2d');
+    var payment_numberChart = new Chart(payment_numberChart_id, {
+        type: 'pie',
+        data: {
+            labels: [{% for payment_type in payments_numbers.payment_type.values %} '{{payment_type}}', {% endfor %}],
+            datasets: [{
+                data: [
+                    {% for payment_type_count in payments_numbers.payment_type_count.values %} {{payment_type_count}}, {% endfor %}],
                 backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
                 hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
             }]

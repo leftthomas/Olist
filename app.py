@@ -45,13 +45,21 @@ def dashboard():
     avg_score_per_category['review_score_mean'] = avg_score_per_category['review_score_mean'].apply(
         lambda x: float('%.2f' % x))
 
-    payments_values = payments[['order_id', 'payment_type']].drop_duplicates()
-    payments_values = payments_values.groupby('payment_type', as_index=False).agg({'order_id': ['count']})
-    payments_values.columns = ['payment_type', 'payment_type_count']
+    payments_values = payments[['payment_type', 'payment_value']].groupby('payment_type', as_index=False).sum()
+    payments_values['payment_value'] = (
+                payments_values['payment_value'] / payments_values['payment_value'].sum()).apply(
+        lambda x: float('%.2f' % x))
     payments_values['payment_type'] = payments_values['payment_type'].apply(lambda x: x.replace('_', ' '))
+
+    payments_numbers = payments[['order_id', 'payment_type']].drop_duplicates()
+    payments_numbers = payments_numbers.groupby('payment_type', as_index=False).agg({'order_id': ['count']})
+    payments_numbers.columns = ['payment_type', 'payment_type_count']
+    payments_numbers['payment_type_count'] = (payments_numbers['payment_type_count'] / payments_numbers[
+        'payment_type_count'].sum()).apply(lambda x: float('%.2f' % x))
+    payments_numbers['payment_type'] = payments_numbers['payment_type'].apply(lambda x: x.replace('_', ' '))
     return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date,
-                           sales_per_purchase_week=sales_per_purchase_week,
-                           avg_score_per_category=avg_score_per_category, payments_values=payments_values)
+                           sales_per_purchase_week=sales_per_purchase_week, payments_values=payments_values,
+                           avg_score_per_category=avg_score_per_category, payments_numbers=payments_numbers)
 
 
 @app.route('/orders')
