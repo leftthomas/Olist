@@ -300,6 +300,44 @@
 
         </div>
 
+        <!--Grid row-->
+        <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">
+                <!--Card-->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header">Number of Transactions for Each State</div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="sales_stateChart" style="display: block" width="774" height="420"
+                                class="chartjs-render-monitor"></canvas>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+
     </div>
 </main>
 <!--Main layout-->
@@ -570,6 +608,87 @@
         options: {
             responsive: true,
             legend: false
+        }
+    });
+
+    //bar
+    var sales_stateChart_id = document.getElementById("sales_stateChart").getContext('2d');
+    var sales_stateChart = new Chart(sales_stateChart_id, {
+        type: 'bar',
+        data: {
+            labels: [{% for state in count_state.index %} '{{state}}', {% endfor %}],
+            datasets: [{
+                label: '# of Transactions',
+                data: [{% for count in count_state.values %} {{count}}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(169,169,169, 0.2)',
+                    'rgba(30, 198, 87, 0.2)',
+                    'rgba(252, 56, 76, 0.2)',
+                    'rgba(38, 38, 38, 0.2)',
+                    'rgba(86, 87, 86, 0.2)',
+                    'rgba(153, 22, 255, 0.2)',
+                    'rgba(255, 18, 64, 0.2)',
+                    'rgba(169,0,169, 0.2)',
+                    'rgba(197,31,132, 0.2)',
+                    'rgba(66,178,115, 0.2)',
+                    'rgba(0,255,255, 0.2)',
+                    'rgba(127,255,212, 0.2)',
+                    'rgba(252,71,30, 0.2)',
+                    'rgba(138,69,27, 0.2)',
+                    'rgba(248,129,117, 0.2)',
+                    'rgba(0,0,0, 0.2)',
+                    'rgba(252,100,77, 0.2)',
+                    'rgba(0,0,255, 0.2)',
+                    'rgba(138,43,226, 0.2)',
+                    'rgba(165,42,42, 0.2)',
+                    'rgba(222,184,135, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(169,169,169, 1)',
+                    'rgba(30, 198, 87,1)',
+                    'rgba(252, 56, 76, 1)',
+                    'rgba(38, 38, 38, 1)',
+                    'rgba(86, 87, 86, 1)',
+                    'rgba(153, 22, 255, 1)',
+                    'rgba(255, 18, 64, 1)',
+                    'rgba(169,0,169, 1)',
+                    'rgba(197,31,132, 1)',
+                    'rgba(66,178,115, 1)',
+                    'rgba(0,255,255, 1)',
+                    'rgba(127,255,212, 1)',
+                    'rgba(252,71,30, 1)',
+                    'rgba(138,69,27, 1)',
+                    'rgba(248,129,117, 1)',
+                    'rgba(0,0,0, 1)',
+                    'rgba(252,100,77, 1)',
+                    'rgba(0,0,255, 1)',
+                    'rgba(138,43,226, 1)',
+                    'rgba(165,42,42, 1)',
+                    'rgba(222,184,135, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     });
 </script>

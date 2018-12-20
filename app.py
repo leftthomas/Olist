@@ -57,9 +57,14 @@ def dashboard():
     payments_numbers['payment_type_count'] = (payments_numbers['payment_type_count'] / payments_numbers[
         'payment_type_count'].sum()).apply(lambda x: float('%.2f' % x))
     payments_numbers['payment_type'] = payments_numbers['payment_type'].apply(lambda x: x.replace('_', ' '))
+
+    count_state = geolocations['geolocation_state'].value_counts()
+    # count_state['others'] = count_state[count_state < 10000].sum()
+    # count_state = count_state[count_state >= 10000]
     return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date,
                            sales_per_purchase_week=sales_per_purchase_week, payments_values=payments_values,
-                           avg_score_per_category=avg_score_per_category, payments_numbers=payments_numbers)
+                           avg_score_per_category=avg_score_per_category, payments_numbers=payments_numbers,
+                           count_state=count_state)
 
 
 @app.route('/orders')
