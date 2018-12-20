@@ -59,12 +59,16 @@ def dashboard():
     payments_numbers['payment_type'] = payments_numbers['payment_type'].apply(lambda x: x.replace('_', ' '))
 
     count_state = geolocations['geolocation_state'].value_counts()
-    # count_state['others'] = count_state[count_state < 10000].sum()
-    # count_state = count_state[count_state >= 10000]
+    count_city = geolocations['geolocation_city'].value_counts()
+    # fix the data error, the two rows are the single one same city
+    count_city['sao paulo'] = count_city['são paulo'] + count_city['sao paulo']
+    del count_city['são paulo']
+    count_city['others'] = count_city[count_city < 10000].sum()
+    count_city = count_city[count_city >= 10000]
     return render_template('dashboard.html', sales_per_purchase_date=sales_per_purchase_date,
                            sales_per_purchase_week=sales_per_purchase_week, payments_values=payments_values,
                            avg_score_per_category=avg_score_per_category, payments_numbers=payments_numbers,
-                           count_state=count_state)
+                           count_state=count_state, count_city=count_city)
 
 
 @app.route('/orders')
