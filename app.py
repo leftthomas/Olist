@@ -83,6 +83,17 @@ def reviews():
 
 @app.route('/maps')
 def maps():
+    # Removing some outliers
+    # Brazils most Northern spot is at 5 deg 16′ 27.8″ N latitude.
+    geo = geolocations[geolocations['geolocation_lat'] <= 5.27438888]
+    # It’s most Western spot is at 73 deg, 58′ 58.19″W Long.
+    geo = geo[geo['geolocation_lng'] >= -73.98283055]
+    # It’s most Southern spot is at 33 deg, 45′ 04.21″ S Latitude.
+    geo = geo[geo['geolocation_lat'] >= -33.75116944]
+    # It’s most Eastern spot is 34 deg, 47′ 35.33″ W Long.
+    geo = geo[geo['geolocation_lng'] <= -34.79314722]
+    # fix the data error, the two rows are the single one same city
+    geo['geolocation_city'].replace(['são paulo'], ['sao paulo'], inplace=True)
     return render_template('maps.html')
 
 
