@@ -37,5 +37,6 @@ def maps():
 
 if __name__ == '__main__':
     sales_per_purchase_date, sales_per_purchase_week, payments_values, avg_score_per_category, payments_numbers, \
-    count_state, count_city, count_product, count_comment, geo = load_data()
+    count_state, count_city, count_product, count_comment, geo, merged_customers, merged_sellers, merged_orders, \
+    merged_sp_customers, merged_spc_customers = load_data()
     app.run(debug=True)

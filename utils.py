@@ -121,6 +121,25 @@ def load_data():
     geo = geo[geo['geolocation_lng'] <= -34.79314722]
     # fix the data error, the two rows are the single one same city
     geo['geolocation_city'].replace(['são paulo'], ['sao paulo'], inplace=True)
+    customers['customer_city'].replace(['são paulo'], ['sao paulo'], inplace=True)
+    sellers['seller_city'].replace(['são paulo'], ['sao paulo'], inplace=True)
 
+    zip_code_geo = geo.groupby('geolocation_zip_code_prefix').mean()
+    unique_customers = customers.drop_duplicates(subset=['customer_unique_id'])
+    merged_customers = pd.merge(unique_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
+                                left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
+    merged_sellers = pd.merge(sellers[['seller_id', 'seller_zip_code_prefix']], zip_code_geo,
+                              left_on='seller_zip_code_prefix', right_on='geolocation_zip_code_prefix')
+    merged_orders = pd.merge(orders[['order_id', 'customer_id']],
+                             customers[['customer_id', 'customer_zip_code_prefix']], on='customer_id')
+    merged_orders = pd.merge(merged_orders[['order_id', 'customer_zip_code_prefix']], zip_code_geo,
+                             left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
+    sp_customers = unique_customers[unique_customers['customer_state'] == 'SP']
+    merged_sp_customers = pd.merge(sp_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
+                                   left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
+    spc_customers = unique_customers[unique_customers['customer_city'] == 'sao paulo']
+    merged_spc_customers = pd.merge(spc_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
+                                    left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
     return sales_per_purchase_date, sales_per_purchase_week, payments_values, avg_score_per_category, payments_numbers, \
-           count_state, count_city, count_product, count_comment, geo
+           count_state, count_city, count_product, count_comment, geo, merged_customers, merged_sellers, merged_orders, \
+           merged_sp_customers, merged_spc_customers
