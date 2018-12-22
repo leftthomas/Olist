@@ -851,7 +851,7 @@
     //word cloud
     var order_wordChart_id = document.getElementById("order_wordChart");
     var order_wordChart = new WordCloud(order_wordChart_id, {
-        list: [{% for a, b in count_product.items() %} ['{{a}}', Math.round({{b}}/100)], {% endfor %}]
+        list: [{% for a, b in count_product.items() %} ['{{a}}', Math.round({{b}}/70)], {% endfor %}]
     });
 
     //word cloud
