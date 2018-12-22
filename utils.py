@@ -140,6 +140,10 @@ def load_data():
     spc_customers = unique_customers[unique_customers['customer_city'] == 'sao paulo']
     merged_spc_customers = pd.merge(spc_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
                                     left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
-    return sales_per_purchase_date, sales_per_purchase_week, payments_values, avg_score_per_category, payments_numbers, \
-           count_state, count_city, count_product, count_comment, geo, merged_customers, merged_sellers, merged_orders, \
-           merged_sp_customers, merged_spc_customers
+    return sales_per_purchase_date[['order_purchase_date', 'price']], sales_per_purchase_week[
+        ['order_purchase_week', 'price']], \
+           payments_values[['payment_type', 'payment_value']], avg_score_per_category[
+               ['product_category_name', 'review_score_mean']], \
+           payments_numbers[
+               ['payment_type', 'payment_type_count']], count_state, count_city, count_product, count_comment, \
+           merged_customers, merged_sellers, merged_orders, merged_sp_customers, merged_spc_customers

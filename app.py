@@ -31,12 +31,13 @@ def reviews():
 
 @app.route('/maps')
 def maps():
-
-    return render_template('maps.html')
+    return render_template('maps.html', merged_customers=merged_customers, merged_sellers=merged_sellers,
+                           merged_orders=merged_orders, merged_sp_customers=merged_sp_customers,
+                           merged_spc_customers=merged_spc_customers)
 
 
 if __name__ == '__main__':
     sales_per_purchase_date, sales_per_purchase_week, payments_values, avg_score_per_category, payments_numbers, \
-    count_state, count_city, count_product, count_comment, geo, merged_customers, merged_sellers, merged_orders, \
+    count_state, count_city, count_product, count_comment, merged_customers, merged_sellers, merged_orders, \
     merged_sp_customers, merged_spc_customers = load_data()
     app.run(debug=True)
