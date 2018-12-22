@@ -376,6 +376,77 @@
 
         </div>
 
+        <!--Grid row-->
+        <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header">Product Category WordCloud</div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="order_wordChart" style="display: block" width="380" height="380"
+                                class="chartjs-render-monitor"></canvas>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header">Review Comment WordCloud</div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+                             class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink"
+                                 style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                            </div>
+                        </div>
+
+                        <canvas id="comment_wordChart" style="display: block" width="380" height="380"
+                                class="chartjs-render-monitor"></canvas>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+
     </div>
 </main>
 <!--Main layout-->
@@ -402,6 +473,8 @@
 <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="../static/js/mdb.min.js"></script>
+<!-- wordcloud2 JavaScript -->
+<script type="text/javascript" src="../static/js/wordcloud2.js"></script>
 <!-- Initializations -->
 <script type="text/javascript">
     // Animations initialization
@@ -639,8 +712,8 @@
             datasets: [{
                 data: [
                     {% for payment_type_count in payments_numbers.payment_type_count.values %} {{payment_type_count}}, {% endfor %}],
-                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+                backgroundColor: ["#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#F7464A"],
+                hoverBackgroundColor: ["#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#FF5A5E"]
             }]
         },
         options: {
@@ -774,6 +847,20 @@
             }
         }
     });
+
+    //word cloud
+    var order_wordChart_id = document.getElementById("order_wordChart");
+    var order_wordChart = new WordCloud(order_wordChart_id, {
+        list: [{% for a, b in count_product.items() %} ['{{a}}', Math.round({{b}}/100)], {% endfor %}]
+    });
+
+    //word cloud
+    var comment_wordChart_id = document.getElementById("comment_wordChart");
+    var comment_wordChart = new WordCloud(comment_wordChart_id, {
+        list: [{% for a, b in count_comment.items() %} ['{{a}}', Math.round({{b}}/100)], {% endfor %}]
+    });
+
+
 </script>
 </body>
 
