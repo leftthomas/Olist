@@ -245,7 +245,7 @@
                     {% for index, row in merged_customers.iterrows() %}
                         {
                             "type": "Feature",
-                            "properties": {},
+                            "properties": {"state": '{{row.customer_state}}'},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
@@ -272,7 +272,7 @@
                 // color circles by ethnicity, using a match expression
                 'circle-color': [
                     'match',
-                    ['get', 'ethnicity'],
+                    ['get', 'state'],
                     'White', '#fbb03b',
                     'Black', '#223b53',
                     'Hispanic', '#e55e5e',
@@ -302,7 +302,7 @@
                     {% for index, row in merged_sellers.iterrows() %}
                         {
                             "type": "Feature",
-                            "properties": {},
+                            "properties": {"state": '{{row.seller_state}}'},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
@@ -329,7 +329,7 @@
                 // color circles by ethnicity, using a match expression
                 'circle-color': [
                     'match',
-                    ['get', 'ethnicity'],
+                    ['get', 'state'],
                     'White', '#fbb03b',
                     'Black', '#223b53',
                     'Hispanic', '#e55e5e',
@@ -359,7 +359,7 @@
                     {% for index, row in merged_orders.iterrows() %}
                         {
                             "type": "Feature",
-                            "properties": {},
+                            "properties": {"state": '{{row.customer_state}}'},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
@@ -386,7 +386,7 @@
                 // color circles by ethnicity, using a match expression
                 'circle-color': [
                     'match',
-                    ['get', 'ethnicity'],
+                    ['get', 'state'],
                     'White', '#fbb03b',
                     'Black', '#223b53',
                     'Hispanic', '#e55e5e',
@@ -416,7 +416,7 @@
                     {% for index, row in merged_sp_customers.iterrows() %}
                         {
                             "type": "Feature",
-                            "properties": {},
+                            "properties": {"city": '{{row.customer_city}}'},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
@@ -440,7 +440,15 @@
                     'base': 1.75,
                     'stops': [[12, 2], [22, 180]]
                 },
-                'circle-color': '#e55e5e'
+                'circle-color': [
+                    'match',
+                    ['get', 'city'],
+                    'White', '#fbb03b',
+                    'Black', '#223b53',
+                    'Hispanic', '#e55e5e',
+                    'Asian', '#3bb2d0',
+                    /* other */ '#ccc'
+                ]
             }
         });
     });
@@ -464,7 +472,7 @@
                     {% for index, row in merged_spc_customers.iterrows() %}
                         {
                             "type": "Feature",
-                            "properties": {},
+                            "properties": {"zip_code": {{row.customer_zip_code_prefix}}},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
@@ -488,7 +496,15 @@
                     'base': 1.75,
                     'stops': [[12, 2], [22, 180]]
                 },
-                'circle-color': '#fbb03b'
+                'circle-color': [
+                    'match',
+                    ['get', 'zip_code'],
+                    'White', '#fbb03b',
+                    'Black', '#223b53',
+                    'Hispanic', '#e55e5e',
+                    'Asian', '#3bb2d0',
+                    /* other */ '#ccc'
+                ]
             }
         });
     });

@@ -126,19 +126,19 @@ def load_data():
 
     zip_code_geo = geo.groupby('geolocation_zip_code_prefix').mean()
     unique_customers = customers.drop_duplicates(subset=['customer_unique_id'])
-    merged_customers = pd.merge(unique_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
+    merged_customers = pd.merge(unique_customers[['customer_zip_code_prefix', 'customer_state']], zip_code_geo,
                                 left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
-    merged_sellers = pd.merge(sellers[['seller_id', 'seller_zip_code_prefix']], zip_code_geo,
+    merged_sellers = pd.merge(sellers[['seller_zip_code_prefix', 'seller_state']], zip_code_geo,
                               left_on='seller_zip_code_prefix', right_on='geolocation_zip_code_prefix')
     merged_orders = pd.merge(orders[['order_id', 'customer_id']],
-                             customers[['customer_id', 'customer_zip_code_prefix']], on='customer_id')
-    merged_orders = pd.merge(merged_orders[['order_id', 'customer_zip_code_prefix']], zip_code_geo,
+                             customers[['customer_id', 'customer_zip_code_prefix', 'customer_state']], on='customer_id')
+    merged_orders = pd.merge(merged_orders[['customer_zip_code_prefix', 'customer_state']], zip_code_geo,
                              left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
     sp_customers = unique_customers[unique_customers['customer_state'] == 'SP']
-    merged_sp_customers = pd.merge(sp_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
+    merged_sp_customers = pd.merge(sp_customers[['customer_zip_code_prefix', 'customer_city']], zip_code_geo,
                                    left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
     spc_customers = unique_customers[unique_customers['customer_city'] == 'sao paulo']
-    merged_spc_customers = pd.merge(spc_customers[['customer_id', 'customer_zip_code_prefix']], zip_code_geo,
+    merged_spc_customers = pd.merge(spc_customers[['customer_zip_code_prefix', 'customer_city']], zip_code_geo,
                                     left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix')
     return sales_per_purchase_date[['order_purchase_date', 'price']], sales_per_purchase_week[
         ['order_purchase_week', 'price']], payments_values[['payment_type', 'payment_value']], avg_score_per_category[
