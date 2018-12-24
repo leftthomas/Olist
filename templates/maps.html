@@ -235,6 +235,53 @@
         style: 'mapbox://styles/mapbox/streets-v10'
     });
     customer_map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    customer_map.on('load', function () {
+
+        customer_map.addSource('customer_source', {
+            type: 'geojson',
+            data: {
+                "type": "FeatureCollection",
+                "features": [
+                    {% for index, row in merged_customers.iterrows() %}
+                        {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    {{row.geolocation_lng}},
+                                    {{row.geolocation_lat}}
+                                ]
+                            }
+                        },
+                    {% endfor %}
+                ]
+            }
+        });
+
+        customer_map.addLayer({
+            'id': 'customer_order',
+            'type': 'circle',
+            'source': 'customer_source',
+            'paint': {
+                // make circles larger as the user zooms from z12 to z22
+                'circle-radius': {
+                    'base': 1.75,
+                    'stops': [[12, 2], [22, 180]]
+                },
+                // color circles by ethnicity, using a match expression
+                'circle-color': [
+                    'match',
+                    ['get', 'ethnicity'],
+                    'White', '#fbb03b',
+                    'Black', '#223b53',
+                    'Hispanic', '#e55e5e',
+                    'Asian', '#3bb2d0',
+                    /* other */ '#ccc'
+                ]
+            }
+        });
+    });
 
     var seller_map = new mapboxgl.Map({
         container: 'seller_map',
@@ -245,6 +292,53 @@
         style: 'mapbox://styles/mapbox/streets-v11'
     });
     seller_map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    seller_map.on('load', function () {
+
+        seller_map.addSource('seller_source', {
+            type: 'geojson',
+            data: {
+                "type": "FeatureCollection",
+                "features": [
+                    {% for index, row in merged_sellers.iterrows() %}
+                        {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    {{row.geolocation_lng}},
+                                    {{row.geolocation_lat}}
+                                ]
+                            }
+                        },
+                    {% endfor %}
+                ]
+            }
+        });
+
+        seller_map.addLayer({
+            'id': 'seller_order',
+            'type': 'circle',
+            'source': 'seller_source',
+            'paint': {
+                // make circles larger as the user zooms from z12 to z22
+                'circle-radius': {
+                    'base': 1.75,
+                    'stops': [[12, 2], [22, 180]]
+                },
+                // color circles by ethnicity, using a match expression
+                'circle-color': [
+                    'match',
+                    ['get', 'ethnicity'],
+                    'White', '#fbb03b',
+                    'Black', '#223b53',
+                    'Hispanic', '#e55e5e',
+                    'Asian', '#3bb2d0',
+                    /* other */ '#ccc'
+                ]
+            }
+        });
+    });
 
     var transaction_map = new mapboxgl.Map({
         container: 'transaction_map',
@@ -255,6 +349,53 @@
         style: 'mapbox://styles/mapbox/satellite-streets-v11'
     });
     transaction_map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    transaction_map.on('load', function () {
+
+        transaction_map.addSource('transaction_source', {
+            type: 'geojson',
+            data: {
+                "type": "FeatureCollection",
+                "features": [
+                    {% for index, row in merged_orders.iterrows() %}
+                        {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    {{row.geolocation_lng}},
+                                    {{row.geolocation_lat}}
+                                ]
+                            }
+                        },
+                    {% endfor %}
+                ]
+            }
+        });
+
+        transaction_map.addLayer({
+            'id': 'transaction_order',
+            'type': 'circle',
+            'source': 'transaction_source',
+            'paint': {
+                // make circles larger as the user zooms from z12 to z22
+                'circle-radius': {
+                    'base': 1.75,
+                    'stops': [[12, 2], [22, 180]]
+                },
+                // color circles by ethnicity, using a match expression
+                'circle-color': [
+                    'match',
+                    ['get', 'ethnicity'],
+                    'White', '#fbb03b',
+                    'Black', '#223b53',
+                    'Hispanic', '#e55e5e',
+                    'Asian', '#3bb2d0',
+                    /* other */ '#ccc'
+                ]
+            }
+        });
+    });
 
     var sp_map = new mapboxgl.Map({
         container: 'sp_map',
@@ -265,6 +406,44 @@
         style: 'mapbox://styles/mapbox/streets-v11'
     });
     sp_map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    sp_map.on('load', function () {
+
+        sp_map.addSource('sp_source', {
+            type: 'geojson',
+            data: {
+                "type": "FeatureCollection",
+                "features": [
+                    {% for index, row in merged_sp_customers.iterrows() %}
+                        {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    {{row.geolocation_lng}},
+                                    {{row.geolocation_lat}}
+                                ]
+                            }
+                        },
+                    {% endfor %}
+                ]
+            }
+        });
+
+        sp_map.addLayer({
+            'id': 'sp_order',
+            'type': 'circle',
+            'source': 'sp_source',
+            'paint': {
+                // make circles larger as the user zooms from z12 to z22
+                'circle-radius': {
+                    'base': 1.75,
+                    'stops': [[12, 2], [22, 180]]
+                },
+                'circle-color': '#e55e5e'
+            }
+        });
+    });
 
     var spc_map = new mapboxgl.Map({
         container: 'spc_map',
@@ -275,6 +454,44 @@
         style: 'mapbox://styles/mapbox/streets-v11'
     });
     spc_map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    spc_map.on('load', function () {
+
+        spc_map.addSource('spc_source', {
+            type: 'geojson',
+            data: {
+                "type": "FeatureCollection",
+                "features": [
+                    {% for index, row in merged_spc_customers.iterrows() %}
+                        {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    {{row.geolocation_lng}},
+                                    {{row.geolocation_lat}}
+                                ]
+                            }
+                        },
+                    {% endfor %}
+                ]
+            }
+        });
+
+        spc_map.addLayer({
+            'id': 'spc_order',
+            'type': 'circle',
+            'source': 'spc_source',
+            'paint': {
+                // make circles larger as the user zooms from z12 to z22
+                'circle-radius': {
+                    'base': 1.75,
+                    'stops': [[12, 2], [22, 180]]
+                },
+                'circle-color': '#fbb03b'
+            }
+        });
+    });
 </script>
 </body>
 
