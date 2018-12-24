@@ -245,7 +245,7 @@
                     {% for index, row in merged_customers.iterrows() %}
                         {
                             "type": "Feature",
-                            "properties": {"state": '{{row.customer_state}}'},
+                            "properties": {"state": "{{row.customer_state}}"},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
@@ -273,10 +273,14 @@
                 'circle-color': [
                     'match',
                     ['get', 'state'],
-                    'White', '#fbb03b',
-                    'Black', '#223b53',
-                    'Hispanic', '#e55e5e',
-                    'Asian', '#3bb2d0',
+                    'SP', '#fbb03b',
+                    'MG', '#223b53',
+                    'RG', '#e55e5e',
+                    'RS', '#3bb2d0',
+                    'PR', '#46BFBD',
+                    'SC', '#F7464A',
+                    'BA', '#949FB1',
+                    'GO', '#4D5360',
                     /* other */ '#ccc'
                 ]
             }
@@ -330,10 +334,14 @@
                 'circle-color': [
                     'match',
                     ['get', 'state'],
-                    'White', '#fbb03b',
-                    'Black', '#223b53',
-                    'Hispanic', '#e55e5e',
-                    'Asian', '#3bb2d0',
+                    'SP', '#fbb03b',
+                    'MG', '#223b53',
+                    'RG', '#e55e5e',
+                    'RS', '#3bb2d0',
+                    'PR', '#46BFBD',
+                    'SC', '#F7464A',
+                    'BA', '#949FB1',
+                    'GO', '#4D5360',
                     /* other */ '#ccc'
                 ]
             }
@@ -387,10 +395,14 @@
                 'circle-color': [
                     'match',
                     ['get', 'state'],
-                    'White', '#fbb03b',
-                    'Black', '#223b53',
-                    'Hispanic', '#e55e5e',
-                    'Asian', '#3bb2d0',
+                    'SP', '#fbb03b',
+                    'MG', '#223b53',
+                    'RG', '#e55e5e',
+                    'RS', '#3bb2d0',
+                    'PR', '#46BFBD',
+                    'SC', '#F7464A',
+                    'BA', '#949FB1',
+                    'GO', '#4D5360',
                     /* other */ '#ccc'
                 ]
             }
@@ -443,10 +455,14 @@
                 'circle-color': [
                     'match',
                     ['get', 'city'],
-                    'White', '#fbb03b',
-                    'Black', '#223b53',
-                    'Hispanic', '#e55e5e',
-                    'Asian', '#3bb2d0',
+                    'sao paulo', '#fbb03b',
+                    'osasco', '#223b53',
+                    'valinhos', '#e55e5e',
+                    'campinas', '#3bb2d0',
+                    'jacarei', '#46BFBD',
+                    'piracaia', '#F7464A',
+                    'ibiuna', '#949FB1',
+                    'sao jose dos campos', '#4D5360',
                     /* other */ '#ccc'
                 ]
             }
@@ -497,12 +513,15 @@
                     'stops': [[12, 2], [22, 180]]
                 },
                 'circle-color': [
-                    'match',
-                    ['get', 'zip_code'],
-                    'White', '#fbb03b',
-                    'Black', '#223b53',
-                    'Hispanic', '#e55e5e',
-                    'Asian', '#3bb2d0',
+                    'case',
+                    ["<=", ['get', 'zip_code'], 2000], '#fbb03b',
+                    ["<=", ['get', 'zip_code'], 3000], '#223b53',
+                    ["<=", ['get', 'zip_code'], 4000], '#e55e5e',
+                    ["<=", ['get', 'zip_code'], 5000], '#3bb2d0',
+                    ["<=", ['get', 'zip_code'], 6000], '#46BFBD',
+                    ["<=", ['get', 'zip_code'], 7000], '#F7464A',
+                    ["<=", ['get', 'zip_code'], 8000], '#949FB1',
+                    ["<=", ['get', 'zip_code'], 9000], '#4D5360',
                     /* other */ '#ccc'
                 ]
             }
