@@ -20,7 +20,7 @@ The dataset is sampled from [Olist](http://www.olist.com). Download the dataset 
 ```
 python data_clear.py
 ```
-to generate the clean data. You also could download the clean dataset from [BaiduYun](https://pan.baidu.com/s/1TaloiplLcdIzL52Q_tJ4AQ) (access code:tcvm), 
+to generate the clean data. You also could download the clean dataset from [BaiduYun](https://pan.baidu.com/s/1TaloiplLcdIzL52Q_tJ4AQ)(access code:tcvm), 
 and extract it into `data` directory, then you just needn't run the script above anymore.
 
 ## Usage
